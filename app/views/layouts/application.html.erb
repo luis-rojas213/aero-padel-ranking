@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AeroPadelRanking</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <%= link_to "Aero Ranking PY", root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <%= link_to "Ranking", rankings_path, { class: "nav-link #{active_menu?('rankings')}" } %>
+              <!--<a class="nav-link active" aria-current="page" href="#">Home</a>-->
+            </li>
+            <li class="nav-item">
+              <%= link_to "Jugadores", players_path, { class: "nav-link #{active_menu?('players')}" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Parejas", pairs_path, { class: "nav-link #{active_menu?('pairs')}" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Partidos", plays_path, { class: "nav-link #{active_menu?('plays')}" } %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</html>

@@ -1,0 +1,56 @@
+<h1>
+  Parejas
+  <small style="float:right;">
+    <%= link_to 'Armar Parejas', pairs_add_path, class: "btn btn-success" %>
+  </small>
+</h1>
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Jugador 1</th>
+      <th>Jugador 2</th>
+      <th>Puntos</th>
+      <th coldspan="3">J / G / P</th>
+      <th>Fecha</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pairs.each do |pair| %>
+      <tr>
+        <td><%= "#{ pair.player_one.first_name } #{ pair.player_one.last_name }" %></td>
+        <td><%= "#{ pair.player_two.first_name } #{ pair.player_two.last_name }" %></td>
+        <td><%= pair.points.to_i %>
+        <td>
+          <%= 
+            "#{pair.win_plays.to_i + pair.lost_plays.to_i} 
+            / #{pair.win_plays.to_i} 
+            / #{pair.lost_plays.to_i}
+            "
+          %>
+        </td>
+        <td><%= pair.pair_date %></td>
+        <td align="right">
+          <%= link_to 'Editar', edit_pair_path(pair), class: "btn btn-warning" %>
+          <%= link_to 'Borrar', pair, 
+                class: "btn btn-danger", 
+                method: :delete, 
+                data: { 
+                  confirm: "Estás seguro de eliminar a la pareja 
+                    #{pair.player_one.first_name} - #{pair.player_one.first_name}?"
+                } 
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

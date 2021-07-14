@@ -1,0 +1,79 @@
+<h1>Generar Pares</h1>
+<% player_ids = @player_ids.present? ? @player_ids : [] %>
+<br>
+<% if notice.present? %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+<div class="row mb-3">
+  <div class="col">
+    <%= form_with(url: pairs_generate_path, local: true) do |form| %>
+      <% @players.each do |player| %>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="form-check">
+              <!--<input class="form-check-input" type="checkbox" value="" id="">-->
+              <% active = player_ids.include?(player.id.to_s) ? "on" : nil %>
+              <% checked = player_ids.include?(player.id.to_s) ? "checked" : nil %>
+              <%= form.check_box "players[#{player.id}]", 
+                  { class: 'form-check-input', checked: checked }, 
+                  active,
+                  nil
+              %>
+              <label class="form-check-label" for="players[<%= player.id %>]">
+                <%= "#{player.first_name} #{player.last_name}" %>
+              </label>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col">
+          <%= form.submit "Generar", class: "btn btn-success" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col">
+    <h3>Parejas</h3>
+    <%= form_with(url: pairs_generate_path, local: true) do |form| %>
+      <div class="row mb-3">
+        <div class="col">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Jugador 1</th>
+                <th>Jugador 2</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if @pairs.present? %>
+                <% @pairs.each do |pair| %>
+                  <%= form.hidden_field "pairs_generated[][player_one_id]", value: pair[:player_one_id] %>
+                  <%= form.hidden_field "pairs_generated[][player_two_id]", value: pair[:player_two_id] %>
+                  <tr>
+                    <td><%= pair[:name_one] %></td>
+                    <td><%= pair[:name_two] %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div
+      
+      <% if @pairs.present? %>
+        <div class="row" align="center">
+          <div class="col">
+            <%= form.submit "Guardar", class: "btn btn-success" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

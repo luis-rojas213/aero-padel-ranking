@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Player one:</strong>
+  <%= @pair.player_one_id %>
+</p>
+
+<p>
+  <strong>Player two:</strong>
+  <%= @pair.player_two_id %>
+</p>
+
+<p>
+  <strong>Play date:</strong>
+  <%= @pair.play_date %>
+</p>
+
+<%= link_to 'Edit', edit_pair_path(@pair) %> |
+<%= link_to 'Back', pairs_path %>

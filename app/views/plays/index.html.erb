@@ -1,0 +1,50 @@
+<h1>
+  Partidos
+  <small style="float:right;">
+    <%= link_to 'Juego Nuevo', new_play_path, class: "btn btn-success" %>
+  </small>
+</h1>
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Pareja 1</th>
+      <th>Resutado</th>
+      <th>Pareja 2</th>
+      <th>Fecha</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% num = 0 %>
+    <% @plays.each do |play| %>
+      <% num += 1 %>
+      <tr>
+        <td><%= num %>
+        <td><%= "#{play.pair_one.player_one.first_name} - #{play.pair_one.player_two.first_name}" %></td>
+        <td><%= "#{play.pair_one_point} / #{play.pair_two_point}" %></td>
+        <td><%= "#{play.pair_two.player_one.first_name} - #{play.pair_two.player_two.first_name}" %></td>
+        <td><%= play.play_date %></td>
+        <td align="right">
+          <%= link_to 'Editar', edit_play_path(play), class: "btn btn-warning" %>
+          <%= link_to 'Borrar', play, 
+                class: "btn btn-danger", 
+                method: :delete, 
+                data: { 
+                  confirm: "Estás seguro de eliminar el juego?"
+                } 
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

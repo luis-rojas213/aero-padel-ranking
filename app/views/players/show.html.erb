@@ -1,0 +1,94 @@
+<h1>
+  Detalles
+  <spam style="float:right">
+    <%= link_to "Volver", players_path, class: "btn btn-primary" %>
+  </spam>
+</h1>
+
+<div class="card mb-3">
+  <div class="card-header">
+    Datos
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <p class="card-text"><%= "#{@player.first_name} #{@player.last_name}" %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Jugador <%= @player.rankeable? ? "Rankeable" : "No Rankeable" %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">
+    Resumen de Partidos
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <p class="card-text">Jugados: <%= @player.total_win_plays.to_i + @player.total_lost_plays.to_i %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Ganados: <%= @player.total_win_plays.to_i %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Perdidos: <%= @player.total_lost_plays.to_i %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">
+    Pareja m&aacute;s efectiva
+  </div>
+  <% pair = @pairs.first %>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <p><%= "#{pair.player_one.first_name} #{pair.player_one.last_name} - #{pair.player_two.first_name} #{pair.player_two.last_name}" %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Jugados: <%= pair.win_plays.to_i + pair.lost_plays.to_i %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Ganados: <%= pair.win_plays.to_i %></p>
+      </div>
+      <div class="col">
+        <p class="card-text">Perdidos: <%= pair.lost_plays.to_i %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">
+    Partidos
+  </div>
+    <% if @plays.present? %>
+      <table class="table">
+        <tbody>
+          <% @plays.each do |play| %>
+            <% if play.pair_one_point > play.pair_two_point && 
+              [play.pair_one.player_one_id, play.pair_one.player_two_id].include?(@player.id) %>
+              <% row_color = "table-success" %>
+            <% else %>
+              <% row_color = "table-danger" %>
+            <% end %>
+            <tr class="<%= row_color %>">
+              <td><%= "#{play.pair_one.player_one.first_name} - #{play.pair_one.player_two.first_name}" %></td>
+              <td><%= "#{play.pair_one_point} / #{play.pair_two_point}" %></td>
+              <td><%= "#{play.pair_two.player_one.first_name} - #{play.pair_two.player_two.first_name}" %></td>
+              <td><%= play.play_date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+</div>
+
+<br>
+
+

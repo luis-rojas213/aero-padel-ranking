@@ -1,0 +1,38 @@
+<h1>
+  Jugadores
+  <small style="float:right;"><%= link_to 'Agregar', new_player_path, class: "btn btn-success" %></small>
+</h1>
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Rankeable</th>
+      <th>Total de Puntos</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= "#{player.first_name} #{player.last_name}" %></td>
+        <td><%= player.rankeable? ? "Si" : "No" %>
+        <td><%= player.total_points.to_i %></td>
+        <td align="right">
+          <%= link_to 'Ver', player, class: "btn btn-primary" %>
+          <%= link_to 'Editar', edit_player_path(player), class: "btn btn-warning" %>
+          <%= link_to 'Borrar', player, method: :delete, class: "btn btn-danger", data: { confirm: "Estas Seguro de eliminar a #{player.first_name}?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

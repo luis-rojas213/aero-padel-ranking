@@ -1,0 +1,61 @@
+<h1>
+  Ranking
+  <small style="float:right;">
+    <%= link_to 'Limpiar', clean_ranking_path, class: "btn btn-danger", data: { confirm: "Se borraran todos los datos, estas seguro de limpiar el Ranking?" } %>
+  </small>
+</h1>
+<br>
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<% position = 1 %>
+<% previous_point = @rankings.present? ? @rankings.first.points.to_i : 0 %>
+<% total_players = @rankings.size - 3 %>
+
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col-8">
+    <div class="row mb-2">
+      <div class="col">
+        <h5 class="card-title">Posici&oacute;n</h5>
+      </div>
+      <div class="col">
+        <h5 class="card-title">Jugador</h5>
+      </div>
+      <div class="col">
+        <h5 class="card-title">Puntos</h5>
+      </div>
+    </div>
+
+    <% @rankings.each_with_index do |ranking, idx| %>
+      <% if ranking.points.to_i < previous_point %>
+        <% previous_point = ranking.points.to_i %>
+        <% position += 1 %>
+      <% end %>
+      <% border = "border-danger" if idx > total_players %>
+      <div class="card mb-2 <%= border %>">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <%= position %>
+            </div>
+            <div class="col">
+              <%= "#{ranking.player.first_name} #{ranking.player.last_name}" %>
+            </div>
+            <div class="col">
+              <%= ranking.points.to_i %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
